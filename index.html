@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -214,10 +216,12 @@
     <div id="contact">
         <h2>Prendre contact</h2>
         <div id="contact-form">
-            <form method="POST" action="https://formspree.io/email@email.com">
+            <form method="POST" action="https://formspree.io/malik.fleury@bluewin.com">
                 <input type="hidden" name="_subject" value="Contact request from personal website" />
                 <input type="email" name="_replyto" placeholder="Votre email" required>
                 <textarea name="message" placeholder="Votre message" required></textarea>
+
+                <div class="g-recaptcha" data-sitekey="6LcN27YUAAAAAHFjgMwjWAizk19Ff-xHan_3Cb6H"></div>
                 <button type="submit">Envoyer</button>
             </form>
         </div>
