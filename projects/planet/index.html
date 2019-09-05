@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./css/stylesheet.css">
+
+		<script src="./js/commonFunctions.js"></script>
+		<script src='./js/gl-matrix-min.js'></script>
+		<script src='./js/webglTools.js'></script>
+		<script src="./js/External/simplex-noise.js"></script>
+		<script src="./js/TP/Tools.js"></script>
+		<script src="./js/TP/Entity.js"></script>
+		<script src="./js/TP/Planet.js"></script>
+		<script src="./js/TP/FpsCounter.js"></script>
+		<script src="./js/TP/Camera.js"></script>
+
+		<script id="shader-vs" type="x-shader/x-vertex">
+			uniform mat4 uMVMatrix;
+			uniform mat4 uPMatrix;
+			uniform float uSeaLevel;
+			attribute vec3 aVertexPosition;
+			attribute vec4 aVertexColor;
+			varying vec3 vVertexPosition;
+			varying vec3 vOriginalVertexPosition;
+
+			void main(void)
+			{
+				vVertexPosition = aVertexPosition;
+				vOriginalVertexPosition = aVertexPosition;
+
+				// If vertex is under water, move it to sea level
+				if(length(aVertexPosition) < uSeaLevel)
+				{
+					vVertexPosition = normalize(vVertexPosition) * uSeaLevel;
+				}
+
+				gl_Position = uPMatrix * uMVMatrix * vec4(vVertexPosition, 1.0);
+			}
+		</script>
+		<script id="shader-fs" type="x-shader/x-fragment">
+			#ifdef GL_ES
+				precision highp float;
+			#endif
+			varying vec3 vVertexPosition;
+			varying vec3 vOriginalVertexPosition;
+
+			uniform float uSeaLevel;
+			uniform float uWave;
+
+			void main(void)
+			{
+				vec4 currentColor = vec4(1.0,1.0,1.0,1.0);
+				float height = length(vOriginalVertexPosition);
+
+				vec4 heightColor1;
+				vec4 heightColor2;
+				float percent;
+
+				float seaLevel = 1.0;
+
+				vec4 color0 = vec4(0.131, 0.139, 0.776, 1.0);
+        vec4 color1 = vec4(0.505, 0.623, 0.905, 1.0);
+        vec4 color2 = vec4(0.674, 0.788, 1.000, 1.0);
+        vec4 color3 = vec4(0.074, 0.494, 0.188, 1.0);
+        vec4 color4 = vec4(0.549, 0.599, 0.315, 1.0);
+        vec4 color5 = vec4(0.890, 0.792, 0.439, 1.0);
+        vec4 color6 = vec4(0.627, 0.858, 0.915, 1.0);
+        vec4 color7 = vec4(0.901, 0.945, 0.941, 1.0);
+        vec4 color8 = vec4(1.000, 1.000, 1.000, 1.0);
+
+				float level0 = uSeaLevel - 0.020;
+				float level1 = uSeaLevel - 0.001;
+				float level2 = uSeaLevel + 0.001;
+				float level3 = uSeaLevel + 0.005;
+				float level4 = uSeaLevel + 0.045;
+				float level5 = uSeaLevel + 0.060;
+				float level6 = uSeaLevel + 0.070;
+				float level7 = uSeaLevel + 0.075;
+				float level8 = uSeaLevel + 0.080;
+
+				if(height < level0)
+				{
+					heightColor1 = color0;
+					heightColor2 = heightColor1;
+					percent = 1.0;
+				}
+				else if(height < level1)
+        {
+					heightColor1 = color0;
+					heightColor2 = color1;
+					percent = (level1 - height) / (level1 - level0);
+        }
+				else if(height < level2)
+        {
+					heightColor1 = color1;
+					heightColor2 = color2;
+					percent = (level2 - height) / (level2 - level1) + uWave;
+
+					if(percent > 1.0)
+						percent = -1.0;
+        }
+			  else if(height < level3)
+        {
+					heightColor1 = color2;
+					heightColor2 = color3;
+					percent = (level3 - height) / (level3 - level2);
+        }
+        else if(height < level4)
+        {
+					heightColor1 = color3;
+					heightColor2 = color4;
+					percent = (level4 - height) / (level4 - level3);
+        }
+				else if(height < level5)
+				{
+					heightColor1 = color4;
+					heightColor2 = color5;
+					percent = (level5 - height) / (level5 - level4);
+				}
+				else if(height < level6)
+				{
+					heightColor1 = color5;
+					heightColor2 = color6;
+					percent = (level6 - height) / (level6 - level5);
+				}
+				else if(height < level7)
+				{
+					heightColor1 = color6;
+					heightColor2 = color7;
+					percent = (level7 - height) / (level7 - level6);
+				}
+				else
+				{
+					heightColor1 = color7;
+					heightColor2 = color8;
+					percent = (level8 - height) / (level8 - level7);
+				}
+
+				// Compute the color depending on height of the terrain
+				currentColor = heightColor1 * percent + heightColor2 * (1.0 - percent);
+				gl_FragColor = currentColor;
+			}
+		</script>
+
+		<script>
+			var mat4 = glMatrix.mat4;
+			var vec3 = glMatrix.vec3;
+			var vec4 = glMatrix.vec4;
+
+			var mvMatrix = mat4.create();
+			var pMatrix = mat4.create();
+			var vMatrix = mat4.create();
+
+			var camera = new Camera(500, 500);
+			var planet = new Planet(camera, 6, false);
+			var fpsCounter = new FpsCounter();
+
+			// Init shaders
+			function initShaderParameters(prg)
+			{
+				//prg.pMatrixUniform = glContext.getUniformLocation(prg, 'uPMatrix');
+		    //prg.mvMatrixUniform = glContext.getUniformLocation(prg, 'uMVMatrix');
+				camera.setupShader(prg);
+				planet.setupShader(prg);
+			}
+
+			// Init webGL buffers
+			function initBuffers()
+			{
+				camera.update();
+				planet.scale(100);
+				planet.createGeometry();
+			}
+
+			// Draw all the scene
+			function drawScene()
+			{
+				glContext.useProgram(prg);
+				glContext.clearColor(0.0, 0.0, 0.0, 1.0);
+
+				glContext.enable(glContext.DEPTH_TEST);
+				glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
+				glContext.viewport(0, 0, c_width, c_height);
+
+				mat4.identity(mvMatrix);
+				mat4.multiply(mvMatrix, camera.getView(), planet.getModel());
+
+				glContext.uniformMatrix4fv(prg.pMatrixUniform, false, camera.getProjection());
+				glContext.uniformMatrix4fv(prg.mvMatrixUniform, false, mvMatrix);
+
+				// check if input has been pressed and execute movement to the camera
+				executeInput();
+
+				planet.render();
+				fpsCounter.update();
+			}
+
+			// Init webGL
+			function initWebGL()
+			{
+				glContext = getGLContext('webgl-canvas');
+
+				initProgram();
+				initBuffers();
+				renderLoop();
+			}
+
+			let inputState = 0;
+			let startTime = Date.now();
+			// Execute movements on the camera
+			function executeInput()
+			{
+				let angle = Math.PI / 360.0;
+				let move = 1.0;
+
+				let elapsedTime = (Date.now() - startTime)/10;
+				startTime = Date.now();
+
+				switch(inputState)
+				{
+					case 0:
+						// Nothing
+						break;
+					case 1:
+						camera.moveForward(move, elapsedTime);
+						break;
+					case 2:
+						camera.moveBackward(move, elapsedTime);
+						break;
+					case 3:
+						camera.rotate(angle, elapsedTime);
+						break;
+					case 4:
+						camera.rotate(-angle, elapsedTime);
+						break;
+				}
+
+				if(inputState != 0)
+				{
+					camera.update();
+					planet.createGeometry();
+				}
+			}
+
+		</script>
+	</head>
+	<body onload="initWebGL(); generatePreset1()">
+		<script>
+			displayTitle("TP: Génération procédurale de terrain V2", 1, 1, 1, 1, 1, 1, 1);
+		</script>
+
+		<h2>Information</h2>
+
+		<ul>
+			<li>Auteur : Malik Fleury</li>
+			<li>Date : 12.05.2019</li>
+			<li>Cours : WebGL</li>
+		</ul>
+
+		<h2>Description</h2>
+
+		<p>Cette application webGL permet la génération de terrain d'une planète de manière procédurale. Voici une description des quelques paramètres modifiables:</p>
+
+		<ul>
+			<li><b>Seed</b> : elle permet de générer un terrain/planète selon une chaîne de caractères.</li>
+			<li><b>Répétition du pattern X</b> : la fréquence du perlin noise. Plus la valeur est basse, moins la fréquence est importante. Cela implique que l'on aura de gros continants. Si la fréquence est élevée, le résultat sera plutôt des îles.</li>
+			<li><b>Hauteur X</b> : amplitude du perlin noise. Cela augmente la hauteur du terrain. </li>
+			<li><b>Wireframe</b> : permet d'activer le mode "fil de fer".</li>
+			<li><b>Niveau de la mer</b> : permet de définir la hauteur du niveau de la mer sur la planète.</li>
+		</ul>
+
+		<p>Pour obtenir des résultats convaincants, il est nécessaires d'utiliser les "couches" de perlin noise correctement.</p>
+		<ul>
+			<li>La couche n° 1 doit avoir une répétition du pattern faible et un amplitude faible également, afin de créer les continents.</li>
+			<li>La couche n° 2 doit avoir une répétition du pattern et une hauteur plus élevée que la couche n°1. Cela permet de créer les détails de la planète/terrain.</li>
+		</ul>
+
+		<h2>Touches</h2>
+
+		<p>Il est possible de se déplacer autour de la planète. Voici la liste des mouvements possibles :</p>
+
+		<ul>
+			<li><b>W</b> : permet de bouger la caméra en avant.</li>
+			<li><b>S</b> : permet de bouger la caméra en arrière.</li>
+			<li><b>A</b> : permet de tourner la caméra à gauche.</li>
+			<li><b>D</b> : permet de tourner la caméra à droite.</li>
+		</ul>
+
+		<h2>Paramètres</h2>
+		<br>
+		<label for="seed-txt"><b>Seed : </b></label>
+		<input type="text" name="seed" id="seed-txt" value="SEED" oninput="apply()"><button type="button" onclick="rand();apply()" id="random-btn">Random</button><br>
+
+		<label for="layer1mul"><b>Couche 1 : </b>Répétition du pattern 1 : </label>
+		<input type="number" name="layer1mul" id="layer1-multiply" value="0.2" min="0.0" max="1.0" step="0.05" onchange="apply()">
+		<label for="layer1div">Hauteur 1 : </label>
+		<input type="number" name="layer1div" id="layer1-divisor"  value="0.6" min="0.0" max="1.0" step="0.05" onchange="apply()"><br>
+
+		<label for="layer2mul"><b>Couche 2 : </b>Répétition du pattern 2 : </label>
+		<input type="number" name="layer2mul" id="layer2-multiply" value="0.6" min="0.0" max="1.0" step="0.05" onchange="apply()">
+		<label for="layer2div">Hauteur 2 : </label>
+		<input type="number" name="layer2div" id="layer2-divisor" value="0.8" min="0.0" max="1.0" step="0.05" onchange="apply()"><br>
+
+		<label for="sea-level"><b>Niveau de la mer : </b></label>
+		<input type="range" min="0.0" max="1.0" value="0.5" step="0.01" onchange="updateSeaLevel()" class="slider" id="sea-level"></input><br>
+
+		<label for="wireframe-checkbox"><b>Wireframe : </b></label>
+		<input type="checkbox" id="wireframe-checkbox" onclick="setWireframeMode()"><br><br>
+
+		<p>Quelques pré-configurations :</p>
+		<p>
+			<button type="button" onclick="generatePreset1()" id="btn-preset-1">Preset 1 (équilibré)</button>
+			<button type="button" onclick="generatePreset2()" id="btn-preset-1">Preset 2 (îlots)</button>
+			<button type="button" onclick="generatePreset3()" id="btn-preset-1">Preset 3 (montagneux)</button>
+		</p>
+
+		<h2>Résultat</h2>
+
+		<br>
+		<div id="fps-counter">FPS : 0</div>
+		<canvas id="webgl-canvas" width="500" height="500">HTML5 is not supported</canvas>
+
+	</body>
+	<script>
+	fpsCounter.setDiv(document.getElementById("fps-counter"));
+
+	let angle = 0.0;
+
+	// Apply parameters and recreate terrain/planet
+	function apply()
+	{
+		let seed = document.getElementById("seed-txt").value;
+
+		let layer1Mul = document.getElementById("layer1-multiply").value;
+		let layer1Div = document.getElementById("layer1-divisor").value;
+		let layer2Mul = document.getElementById("layer2-multiply").value;
+		let layer2Div = document.getElementById("layer2-divisor").value;
+
+		layer1Mul = convertNormalizedValue(0.0, 6.0, layer1Mul);
+		layer2Mul = convertNormalizedValue(0.0, 6.0, layer2Mul);
+		layer1Div = convertNormalizedValue(1.0, 30.0, layer1Div, true);
+		layer2Div = convertNormalizedValue(1.0, 30.0, layer2Div, true);
+
+		updateSeaLevel();
+
+		planet.setWireframe(false);
+		planet.setSeed(seed);
+		planet.setTopographyLayers(layer1Mul, layer1Div, layer2Mul, layer2Div);
+		planet.createGeometry();
+	}
+
+	// Create random seed
+	function rand()
+	{
+		let randomSeed = generateSeed();
+		document.getElementById("seed-txt").value = randomSeed;
+	}
+
+	// Set the wireframe mode
+	function setWireframeMode()
+	{
+		let enableWireframe = document.getElementById("wireframe-checkbox").checked;
+		planet.setWireframe(enableWireframe);
+	}
+
+	// Update the sea level of the planet
+	function updateSeaLevel()
+	{
+		let seaLevelSlider = document.getElementById("sea-level");
+
+		let seaLevel = convertNormalizedValue(0.9, 1.1, seaLevelSlider.value);
+
+		planet.setSeaLevel(seaLevel);
+		seaLevelSlider.innerHTML = seaLevel;
+	}
+
+	// Detect key pressed and enable movement
+	function onKeyDown(e)
+	{
+		e = e || window.event;
+
+		if(e.repeat == false)
+		{
+			startTime = Date.now();
+
+			if (e.key == 'w')
+			{
+				inputState = 1;
+			}
+			if (e.key == 's')
+			{
+				inputState = 2;
+			}
+			if (e.key == 'a')
+			{
+				inputState = 3;
+			}
+			if (e.key == 'd')
+			{
+				inputState = 4;
+			}
+		}
+	}
+
+	// Detect when key is released and disable movement
+	function onKeyUp(e)
+	{
+		inputState = 0;
+	}
+
+	// Add keyboard events
+	document.onkeydown = onKeyDown;
+	document.onkeyup = onKeyUp;
+
+	function generatePreset1()
+	{
+		generatePreset("Preset 1",0.2,0.6,0.6,0.8,0.5);
+	}
+
+	function generatePreset2()
+	{
+		generatePreset("Preset 2",0.3,0.65,0.5,0.9,0.8);
+	}
+
+	function generatePreset3()
+	{
+		generatePreset("Preset 3",0.2,0.6,0.5,0.8,0.35);
+	}
+
+	function generatePreset(seed, mul1, div1, mul2, div2, seaLevel)
+	{
+		document.getElementById("seed-txt").value = seed;
+		document.getElementById("layer1-multiply").value = mul1;
+		document.getElementById("layer1-divisor").value = div1;
+		document.getElementById("layer2-multiply").value = mul2;
+		document.getElementById("layer2-divisor").value = div2;
+		document.getElementById("sea-level").value = seaLevel;
+
+		apply();
+	}
+
+	</script>
+</html>
