@@ -94,4 +94,7 @@
         });
     });
 
+    // Build charts
+    //createSkillCharts("skill-charts");
+
 })(jQuery);

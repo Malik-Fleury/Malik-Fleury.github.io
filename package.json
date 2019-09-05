@@ -26,6 +26,7 @@
     "gulp-wait": "0.0.2"
   },
   "dependencies": {
+    "chart.js": "^2.8.0",
     "node-sass": "^4.12.0"
   }
 }
