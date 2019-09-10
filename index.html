@@ -10,6 +10,13 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -148,10 +155,24 @@
                           Le programme a été réalisé avec : Python, Django, Bootstrap, Javascript.
                         </p>
                         <div class="gallery">
-                          <a href="projects/opensauce/home.jpg">Acceuil</a></br>
-                          <a href="projects/opensauce/game.jpg">Jeu</a></br>
-                          <a href="projects/opensauce/report.jpg">Système de signalements</a>
+                          <a href="#opensauce-home-modal" rel="modal:open">Acceuil</a></br>
+                          <a href="#opensauce-game-modal" rel="modal:open">Jeu</a></br>
+                          <a href="#opensauce-report-modal" rel="modal:open">Système de signalements</a>
                         </div>
+
+                        <div id="opensauce-home-modal" class="modal">
+                          <img src="projects/opensauce/home.jpg" width="100%"></img>
+                        </div>
+
+                        <div id="opensauce-game-modal" class="modal">
+                          <div><img src="projects/opensauce/game.jpg" width="100%"></img></div>
+                        </div>
+
+                        <div id="opensauce-report-modal" class="modal">
+                          <div><img src="projects/opensauce/report.jpg" width="100%"></img></div>
+                        </div>
+
+                        <p><a href="#opensauce-modal" rel="modal:open">Plus d'informations</a></p>
                     </div>
                     <!-- End .project-info -->
                 </div>
@@ -247,10 +268,6 @@
         </div>
     </footer>
     <!-- End footer -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/scripts.min.js"></script>
 </body>
