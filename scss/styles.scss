@@ -1005,8 +1005,36 @@ footer {
 // CUSTOMs
 // --------------------------------------
 
-.chart-skill
+#skill-charts
 {
-    width: 200px;
-    height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-wrap: wrap;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+
+.chart
+{
+  position: relative;
+  width: 110px;
+  height: 220px;
+  margin: auto;
+  text-align: center;
+  align-self: center;
+  flex-shrink: 1;
+}
+
+.chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.percent
+{
+  display: inline-block;
+  line-height: 110px;
+  z-index: 2;
 }
