@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "easy-pie-chart": "^2.1.7",
+    "micromodal": "^0.4.2",
     "node-sass": "^4.12.0"
   }
 }

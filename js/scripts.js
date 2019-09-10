@@ -94,6 +94,10 @@
         });
     });
 
+    bootbox.alert("Hello world!", function() {
+                    console.log("Alert Callback");
+                });
+
     // Set skills
     var skillsDic = {};
     skillsDic['C#'] = 75;
@@ -130,5 +134,4 @@
       // Callback function that is called at the end of any animation (only if animate is not false).
       onStop: $.noop
     });
-
 })(jQuery);
