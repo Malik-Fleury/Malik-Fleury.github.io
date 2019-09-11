@@ -1,3 +1,4 @@
+// Author : Malik Fleury
 
 class FpsCounter
 {

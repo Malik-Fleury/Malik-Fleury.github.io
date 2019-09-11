@@ -1,3 +1,4 @@
+// Author : Malik Fleury
 
 // Generate random values from between min and max
 function random(min, max)

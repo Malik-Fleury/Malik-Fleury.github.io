@@ -319,7 +319,13 @@
 		<br>
 		<div id="fps-counter">FPS : 0</div>
 		<canvas id="webgl-canvas" width="500" height="500">HTML5 is not supported</canvas>
-
+		<br>
+		<span>
+			<input type="button" value="w" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
+			<input type="button" value="a" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
+			<input type="button" value="s" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
+			<input type="button" value="d" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
+		</span>
 	</body>
 	<script>
 	fpsCounter.setDiv(document.getElementById("fps-counter"));
@@ -437,6 +443,23 @@
 		document.getElementById("sea-level").value = seaLevel;
 
 		apply();
+	}
+
+
+	// Work around for mobile
+	function buttonDown(keyPressed)
+	{
+		let event = {repeat:false, key:keyPressed};
+		console.log("down");
+		onKeyDown(event);
+	}
+
+	// Work around for mobile
+	function buttonUp(keyPressed)
+	{
+		let event = {repeat:false, key:keyPressed};
+		console.log("up");
+		onKeyUp(event);
 	}
 
 	</script>

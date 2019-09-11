@@ -1,3 +1,5 @@
+// Author : Malik Fleury
+
 class Entity
 {
    constructor(translationVec3 = vec3.fromValues(0.0, 0.0, 0.0),

@@ -1,3 +1,4 @@
+// Author : Malik Fleury
 
 class Planet extends Entity
 {
