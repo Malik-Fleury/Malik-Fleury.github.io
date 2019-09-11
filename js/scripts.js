@@ -105,6 +105,9 @@
     skillsDic['PHP'] = 50;
     skillsDic['Javascript'] = 75;
     skillsDic['WebGL1'] = 75;
+    skillsDic['UE4'] = 50;
+    skillsDic['Unity'] = 50;
+    skillsDic['Blender'] = 50;
 
     // Build charts
     createSkillCharts('skill-charts', skillsDic);

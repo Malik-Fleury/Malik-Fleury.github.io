@@ -162,6 +162,48 @@
         <h2 class="heading">Projets</h2>
         <div class="container">
             <div class="row">
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/rendu_realiste.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Rendu réaliste en RV</h3>
+                        <p>
+                            Ce projet est le travail de Bachelor que j'ai réalisé lors de la fin de mes études. Il a été proposé par Tornos car l'entreprise est en partenariat avec l'équipe imagerie de la HE-ARC.
+                            Le programme a réaliser consistait à la visualisation de machines-outils en 3D à l'aide d'un casque de réalité virtuel dans le but de présenter les machines lors de foires.
+                            Cela permet à l'entreprise de montrer qu'elle reste au courant des dernières technologies, de présenter les machines actuelles et futures, mais aussi d'éviter de les déplacer physiquement.
+                        </p>
+                        <p>
+                          Le programme a été réalisé avec : Unreal Engine, SteamVR, Samsung Odyssey, Blueprints
+                        </p>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/planet.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Générateur procédurale de planètes 3D</h3>
+                        <p>
+                            Dans le cadre du cours d'infographie de la HE-Arc, j'ai développé une application permettant de générer des planètes en 3D de manière procédurale.
+                            L'utilisateur peut modifier des paramètres afin de générer des planètes différentes et peut également avancer, reculer, tourner la vue utilisateur.
+                            A savoir qu'un système de niveaux de détails et de "culling" (suppression des faces cachées) ont été mis en place dans le but d'améliorer les performances.
+                        </p>
+                        <p>
+                          Le programme a été réalisé avec : HTML, CSS, Javascript et WebGL.
+                        </p>
+                        <h4>
+                          <a href="./projects/planet/index.html">Voir projet</a>
+                        </h4>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+
                 <div class="project shadow-large">
                     <div class="project-image">
                         <img src="images/opensauce.jpg" />
@@ -177,9 +219,12 @@
                           Le programme a été réalisé avec : Python, Django, Bootstrap, Javascript.
                         </p>
                         <div class="gallery">
-                          <a href="#opensauce-home-modal" rel="modal:open">Acceuil</a></br>
-                          <a href="#opensauce-game-modal" rel="modal:open">Jeu</a></br>
-                          <a href="#opensauce-report-modal" rel="modal:open">Système de signalements</a>
+                          <h4>
+                            Images :
+                            <a href="#opensauce-home-modal" rel="modal:open">Acceuil</a> |
+                            <a href="#opensauce-game-modal" rel="modal:open">Jeu</a> |
+                            <a href="#opensauce-report-modal" rel="modal:open">Système de signalements</a>
+                          </h4>
                         </div>
 
                         <div id="opensauce-home-modal" class="modal">
@@ -200,40 +245,50 @@
 
                 <div class="project shadow-large">
                     <div class="project-image">
-                        <img src="images/planet.jpg" />
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>Générateur procédurale de planètes 3D</h3>
-                        <p>
-                            Dans le cadre du cours d'infographie de la HE-Arc, j'ai développé une application permettant de générer des planètes en 3D de manière procédurale.
-                            L'utilisateur peut modifier des paramètres afin de générer des planètes différentes et peut également avancer, reculer, tourner la vue utilisateur.
-                            A savoir qu'un système de niveaux de détails et de "culling" (suppression des faces cachées) ont été mis en place dans le but d'améliorer les performances.
-                        </p>
-                        <p>
-                          Le programme a été réalisé avec : HTML, CSS, Javascript et WebGL.
-                        </p>
-                        <a href="./projects/planet/index.html">Voir projet</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
-
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="images/planet.jpg" />
+                        <img src="images/blogs.jpg" />
                     </div>
                     <!-- End .project-image -->
                     <div class="project-info">
                         <h3>Blogs</h3>
                         <p>
                             Dans le cadre du cours de développement web, moi et une collègue avons développé un site web en PHP permettant la création de blogs.
-                            Les utilisateurs peuvent créer un compte et créer son propre blog. Les points importants du projets portaient sur la gestions des articles et la personnalisation de chaque blog.
+                            Les utilisateurs peuvent créer un compte et créer leur propre blog. Les points importants du projets portaient sur la gestions des articles et la personnalisation de chaque blog.
                             A savoir que nous avons utilisé un mini-framework (routage) programmé par notre enseignant afin de comprendre les concepts de base du développement web.
                         </p>
                         <p>
                           Le programme a été réalisé avec : HTML, CSS, Javascript et PHP.
                         </p>
-                        <a href="./projects/planet/index.html">Voir projet</a>
+
+                        <div class="gallery">
+                          <h4>Images :
+                            <a href="#blogs-home-modal" rel="modal:open">Acceuil</a> |
+                            <a href="#blogs-articles-modal" rel="modal:open">Articles</a> |
+                            <a href="#blogs-search-modal" rel="modal:open">Recherche</a> |
+                            <a href="#blogs-sub-modal" rel="modal:open">Suivre</a> |
+                            <a href="#blogs-settings-modal" rel="modal:open">Paramètres</a>
+                          </h4>
+                        </div>
+
+                        <div id="blogs-home-modal" class="modal">
+                          <img src="projects/blogs/user_blog.jpg" width="100%"></img>
+                        </div>
+
+                        <div id="blogs-articles-modal" class="modal">
+                          <img src="projects/blogs/user_articles.jpg" width="100%"></img>
+                        </div>
+
+                        <div id="blogs-settings-modal" class="modal">
+                          <img src="projects/blogs/user_settings.jpg" width="100%"></img>
+                        </div>
+
+                        <div id="blogs-sub-modal" class="modal">
+                          <img src="projects/blogs/user_sub.jpg" width="100%"></img>
+                        </div>
+
+                        <div id="blogs-search-modal" class="modal">
+                          <img src="projects/blogs/search.jpg" width="100%"></img>
+                        </div>
+
                     </div>
                 </div>
                 <!-- End .project-info -->
