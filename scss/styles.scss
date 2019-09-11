@@ -1083,11 +1083,14 @@ footer {
 #contact-info
 {
   order: 0;
-  width: 300px;
+  width: 210px;
   text-align: left;
   align-self: center;
   flex-grow: 0;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 #contact-form
