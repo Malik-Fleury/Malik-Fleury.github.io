@@ -321,10 +321,13 @@
 		<canvas id="webgl-canvas" width="500" height="500">HTML5 is not supported</canvas>
 		<br>
 		<span>
-			<input type="button" value="w" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
-			<input type="button" value="a" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
-			<input type="button" value="s" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
-			<input type="button" value="d" onmousedown="buttonDown(this.value)" onmouseup="buttonUp(this.value)">
+			<input id="forward-btn" class="move-btn" type="button" value="w" onclick="buttonDown(this.value)">
+			<br>
+			<input id="left-btn" class="move-btn" type="button" value="a" onclick="buttonDown(this.value)">
+			<input id="backward-btn" class="move-btn" type="button" value="s" onclick="buttonDown(this.value)">
+			<input id="right-btn" class="move-btn" type="button" value="d" onclick="buttonDown(this.value)">
+			<br>
+			<input id="stop-btn" class="move-btn" type="button" value="stop" onclick="buttonUp(this.value)">
 		</span>
 	</body>
 	<script>
@@ -450,7 +453,6 @@
 	function buttonDown(keyPressed)
 	{
 		let event = {repeat:false, key:keyPressed};
-		console.log("down");
 		onKeyDown(event);
 	}
 
@@ -458,7 +460,6 @@
 	function buttonUp(keyPressed)
 	{
 		let event = {repeat:false, key:keyPressed};
-		console.log("up");
 		onKeyUp(event);
 	}
 
