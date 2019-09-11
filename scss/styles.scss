@@ -1043,3 +1043,75 @@ footer {
 {
   max-width: 80%;
 }
+
+.list-main-tasks
+{
+  //color: darken($base-color, 5%);
+  font-weight: bold;
+}
+
+.list-detail-tasks
+{
+  color: lighten($base-color, 40%);
+  font-weight: normal;
+}
+
+#about-text
+{
+   text-align: justify;
+}
+
+#gmap-canvas
+{
+  height: 400px;
+  width: 100%;
+  border-top-style: groove;
+  border-right-style: none;
+  border-bottom-style: groove;
+  border-left-style: none;
+  border-color: lighten($base-color, 40%);
+  border-width: 10px;
+}
+
+#contact-panel
+{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#contact-info
+{
+  order: 0;
+  width: 300px;
+  text-align: left;
+  align-self: center;
+  flex-grow: 0;
+  margin: auto;
+}
+
+#contact-form
+{
+  max-width: 500px;
+  width: 500px;
+  flex-grow: 1;
+  order: 1;
+  text-align: left;
+  align-self: center;
+  flex-grow: 0;
+  margin: auto;
+}
+
+.icon
+{
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+#contact-info p
+{
+  font-size: 15px;
+  color: white;
+  margin-bottom: 10px;
+}

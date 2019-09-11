@@ -10,7 +10,7 @@ function createSkillCharts(divName, skillsDic)
 
     var percentSpan = document.createElement('span');
     percentSpan.className = 'percent';
-    percentSpan.innerHTML = skillsDic[key];
+    percentSpan.innerHTML = skillsDic[key] + '%';
 
     var chartTitle = document.createElement('h2');
     chartTitle.innerHTML = key;

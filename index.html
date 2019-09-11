@@ -78,9 +78,8 @@
                 <div class="col-md-4">
                     <h2 class="heading">A propos</h2>
                 </div>
-                <div class="col-md-8">
-                    <p>
-                    </p>
+
+                <div id="about-text" class="col-md-8">
                 </div>
             </div>
         </div>
@@ -93,17 +92,35 @@
             <div data-date="Février-Juin, 2016">
                 <h3>Développeur logiciel junior chez Sontex</h3>
                 <h4>Sonceboz</h4>
-                <p>
-                    Développement d'une application de paramètrage à distance de centrales (en JAVA).
-                </p>
+                <ul class="list-main-tasks">
+                  <li>Développement d'une application de paramètrage à distance de centrales 646 par lots (en JAVA)</li>
+                  <ul class="list-detail-tasks">
+                    <li>Techniques utilisées : Java SE, Java FX, communication par GSM, CSD et SMS</li>
+                  </ul>
+                  <br>
+                  <li>Réalisation d'une carte d'interface électronique LAN pour les centrales Sontex
+                  <ul class="list-detail-tasks">
+                    <li>Recherche, choix, configuration et essaies de passerelles LAN Ethernet - RS232</li>
+                    <li>Schéma électronique, layout (avec Altium), montage et essais de cartes prototypes.</li>
+                  </ul>
+                  <br>
+                  <li>Evaluation de chips NFC pour un nouvel appareil Sontex</li>
+                  <ul class="list-detail-tasks">
+                    <li>Programmation Java sur Android</li>
+                  </ul>
+                </ul>
             </div>
 
             <div data-date="Août-Octobre, 2013">
                 <h3>Stagiaire au Service de l'économie rurale (ECR)</h3>
                 <h4>Courtemelon</h4>
-                <p>
-                    Classement, archivage et opérations de saisie.
-                </p>
+                <ul class="list-main-tasks">
+                  <li>Classement des dossiers courants</li>
+                  <br>
+                  <li>Archivage des dossiers des années précédentes</li>
+                  <br>
+                  <li>Opérations de saisie de diverses informations dans une base de données Access</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -116,6 +133,7 @@
             <span class="education-date">2016 - 2019</span>
             <h4>HE-Arc Ingénierie, Neuchâtel</h4>
             <p>
+              Travail de diplôme : application 3D de rendu réaliste en RV
             </p>
         </div>
         <div class="education-block">
@@ -123,7 +141,10 @@
             <span class="education-date">2013 - 2016</span>
             <h4>Ecole supérieure technique, Porrentruy</h4>
             <p>
-              Prix : meilleur travail de diplôme de la classe, "British American Tobacco"
+              Travail de diplôme : application de paramètrage à distance de centrales 646 par lots
+            </p>
+            <p>
+              Prix : <b>meilleur travail de diplôme de la classe, "British American Tobacco"</b>
             </p>
         </div>
         <div class="education-block">
@@ -131,6 +152,7 @@
             <span class="education-date">2008 - 2013</span>
             <h4>Ecole des métiers techniques, Porrentruy</h4>
             <p>
+              Travail de CFC : appareil de mesure de citernes
             </p>
         </div>
     </div>
@@ -195,6 +217,27 @@
                     </div>
                     <!-- End .project-info -->
                 </div>
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/planet.jpg" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Blogs</h3>
+                        <p>
+                            Dans le cadre du cours de développement web, moi et une collègue (Kim Biloni) avons développé un site web en PHP permettant la création de blogs.
+                            Les utilisateurs peuvent créer un compte et créer son propre blog. Les points importants du projets portaient sur la gestions des articles et la personnalisation de chaque blog.
+                            A savoir que nous avons utilisé un mini-framework (routage) programmé par notre enseignant afin de comprendre les concepts de base du développement web.
+                        </p>
+                        <p>
+                          Le programme a été réalisé avec : HTML, CSS, Javascript et PHP.
+                        </p>
+                        <a href="./projects/planet/index.html">Voir projet</a>
+                    </div>
+                </div>
+                <!-- End .project-info -->
+
                 <!-- End .project -->
             </div>
         </div>
@@ -211,15 +254,27 @@
 
     <div id="contact">
         <h2>Prendre contact</h2>
-        <div id="contact-form">
-            <form method="POST" action="https://formspree.io/malik.fleury@bluewin.ch">
-                <input type="hidden" name="_subject" value="Contact request from personal website" />
-                <input type="email" name="_replyto" placeholder="Votre email" required>
-                <textarea name="message" placeholder="Votre message" required></textarea>
+        <br>
+        <iframe width="100%" height="400px" id="gmap-canvas" src="https://maps.google.com/maps?q=Corban&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        <br>
+        <br>
+        <div id="contact-panel">
+          <div id="contact-info">
+            <h2>Details</h2>
+            <p><img class="icon" src="icons/email.png" />malik.fleury@bluewin.ch</p>
+            <p><img class="icon" src="icons/phone.png" />+41 (0)79 XXX XX XX</p>
+            <p><img class="icon" src="icons/location.png" />2826 Corban, Suisse</p>
+          </div>
+          <div id="contact-form">
+              <h2>Ecrivez-moi</h2>
+              <form method="POST" action="https://formspree.io/malik.fleury@bluewin.ch">
+                  <input type="hidden" name="_subject" value="Contact request from personal website" />
+                  <input type="email" name="_replyto" placeholder="Votre email" required>
+                  <textarea name="message" placeholder="Votre message" required></textarea>
 
-                <!--<div class="g-recaptcha" data-sitekey="6LcN27YUAAAAAHFjgMwjWAizk19Ff-xHan_3Cb6H"></div>-->
-                <button type="submit">Envoyer</button>
-            </form>
+                  <button type="submit">Envoyer</button>
+              </form>
+          </div>
         </div>
         <!-- End #contact-form -->
     </div>
