@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "easy-pie-chart": "^2.1.7",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.13.1"
   }
 }
