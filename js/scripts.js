@@ -96,18 +96,17 @@
 
     // Set skills
     var skillsDic = {};
+    skillsDic['HTML'] = 100;
+    skillsDic['CSS'] = 50;
+    skillsDic['PHP'] = 75;
+    skillsDic['Javascript'] = 50;
     skillsDic['C#'] = 75;
     skillsDic['Java'] = 75;
     skillsDic['C++'] = 75;
-    skillsDic['Python'] = 75;
-    skillsDic['HTML'] = 100;
-    skillsDic['CSS'] = 50;
-    skillsDic['PHP'] = 50;
-    skillsDic['Javascript'] = 75;
-    skillsDic['WebGL1'] = 75;
-    skillsDic['UE4'] = 50;
-    skillsDic['Unity'] = 50;
-    skillsDic['Blender'] = 50;
+    skillsDic['Symfony'] = 75;
+    skillsDic['WebGL1'] = 50;
+    skillsDic['UE'] = 25;
+    skillsDic['Godot'] = 50;
 
     // Build charts
     createSkillCharts('skill-charts', skillsDic);
